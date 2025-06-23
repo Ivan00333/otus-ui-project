@@ -13,6 +13,7 @@ class Environment:
         if not self.base_url:
             raise RuntimeError(f"Переменная {var_name} не задана")
 
+    @property
     def get_base_url(self):
         return self.base_url
 
