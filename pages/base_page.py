@@ -10,10 +10,7 @@ class BasePage:
         url = f"{host.base_url}{uri}"
         logger.info(f"Opening URL: {url}")
         response = self.page.goto(url, wait_until="domcontentloaded")
-        if response:
-            logger.info(f"Page loaded with status: {response.status}")
-        else:
-            logger.warning("No response object returned by goto()")
+
         return response
 
     def click(self, locator: str) -> None:
