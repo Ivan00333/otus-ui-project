@@ -8,6 +8,8 @@ class AllProductsLocators:
     ADD_TO_CART = "//button[@data-test='add-to-cart-sauce-labs-backpack']"
     REMOVE_FROM_CART = "//button[@data-test='remove-sauce-labs-backpack']"
     CART_BADGE = "//span[@data-test='shopping-cart-badge']"
+    BACKPACK_LABEL = "//div[text()='Sauce Labs Backpack']"
+    CART_LINK = "//a[@data-test='shopping-cart-link']"
 
     PRODUCTS_LIST = [
         "Sauce Labs Backpack",

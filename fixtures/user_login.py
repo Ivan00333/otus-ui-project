@@ -1,8 +1,9 @@
 import pytest
 from pages.login_page import LoginPage
+from utils.logger import logger
 
 
-@pytest.fixture(scope='class')
+@pytest.fixture()
 def user_login(browser):
     login_page = LoginPage(browser)
     login_page.open_login_page()

@@ -16,7 +16,7 @@ formatter = logging.Formatter(
 
 file_handler = RotatingFileHandler(
     filename=LOG_FILE,
-    maxBytes=5*1024*1024,
+    maxBytes=5*1024*1024,   # 5 MB
     backupCount=3,
     encoding="utf-8"
 )
@@ -27,5 +27,8 @@ console_handler = logging.StreamHandler()
 console_handler.setLevel(LOG_LEVEL)
 console_handler.setFormatter(formatter)
 
-logging.basicConfig(level=LOG_LEVEL, handlers=[file_handler, console_handler])
 logger = logging.getLogger("saucedemo")
+logger.setLevel(LOG_LEVEL)
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+logger.propagate = True

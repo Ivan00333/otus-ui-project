@@ -12,7 +12,14 @@ class ProductPage(BasePage):
     def open_product_page(self):
         self.open("inventory-item.html?id=5")
 
+    def go_to_cart(self):
+        self.click(ProductLocators.CART_LINK)
+
     def add_product_to_cart(self):
         self.click(ProductLocators.ADD_TO_CART)
         self.assertions.check_presence(ProductLocators.REMOVE_BUTTON)
-        self.assertions.check_presence(ProductLocators.CART_BADGE)
+
+    def check_elements_present(self):
+        self.assertions.check_presence(ProductLocators.PRODUCT_NAME)
+        self.assertions.check_presence(ProductLocators.IMG)
+        self.assertions.check_presence(ProductLocators.PRICE)
