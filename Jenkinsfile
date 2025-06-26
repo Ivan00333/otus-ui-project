@@ -7,7 +7,7 @@ pipeline {
       credentialType: 'UsernamePassword',
       description: 'Sauce Demo login/password'
     )
-    choice(name: 'ENV', choices: ['test','staging','prod'], description: '')
+    choice(name: 'ENV', choices: ['test'], description: '')
     choice(name: 'BROWSER', choices: ['chrome','firefox'], description: '')
     booleanParam(name: 'HEADLESS', defaultValue: true, description: '')
     string(name: 'SLOW', defaultValue: '200', description: '')
