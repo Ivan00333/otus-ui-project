@@ -2,51 +2,50 @@ pipeline {
   agent any
 
   parameters {
-    choice(
-      name: 'ENV',
-      choices: ['test'],
-      description: 'Choose the target environment'
-    )
-    choice(
-      name: 'BROWSER',
-      choices: ['chrome', 'firefox'],
-      description: 'Choose browser: chrome or firefox'
-    )
     credentials(
-      name: 'SAUCE_CREDENTIALS',
+      name: 'SAUCE_DEMO_CRED',
       credentialType: 'UsernamePassword',
-      description: 'Sauce Demo credentials'
+      description: 'Sauce Demo login/password'
     )
+    choice(name: 'ENV', choices: ['test','staging','prod'], description: '')
+    choice(name: 'BROWSER', choices: ['chrome','firefox'], description: '')
+    booleanParam(name: 'HEADLESS', defaultValue: true, description: '')
+    string(name: 'SLOW', defaultValue: '200', description: '')
   }
 
   environment {
     TEST_URL = 'https://www.saucedemo.com/'
-    ENV            = "${params.ENV}"
-    BROWSER        = "${params.BROWSER}"
-    TEST_AUTH_LOGIN    = "${SAUCE_CREDENTIALS_USR}"
-    TEST_AUTH_PASSWORD = "${SAUCE_CREDENTIALS_PSW}"
+    ENV     = "${params.ENV}"
+    BROWSER = "${params.BROWSER}"
+    H       = "${params.HEADLESS}"
+    SLOW    = "${params.SLOW}"
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
+    stage('Checkout') { steps { checkout scm } }
 
     stage('Prepare .env') {
       steps {
-        sh '''
-          cat > .env <<EOF
-          TEST_URL=${TEST_URL}
-          ENV=${ENV}
-          TEST_AUTH_LOGIN=${TEST_AUTH_LOGIN}
-          TEST_AUTH_PASSWORD=${TEST_AUTH_PASSWORD}
-          EOF
-        '''
-        sh 'cat .env'
+        withCredentials([usernamePassword(
+          credentialsId: 'sauce-demo-creds',
+          usernameVariable: 'TEST_AUTH_LOGIN',
+          passwordVariable: 'TEST_AUTH_PASSWORD'
+        )]) {
+          sh '''
+            cat > .env <<EOF
+            TEST_URL=${TEST_URL}
+            ENV=${ENV}
+            TEST_AUTH_LOGIN=${TEST_AUTH_LOGIN}
+            TEST_AUTH_PASSWORD=${TEST_AUTH_PASSWORD}
+            EOF
+          '''
+          sh 'echo ".env content:" && cat .env'
+        }
       }
     }
+  }
+}
+
 
     stage('Setup Python & Playwright') {
       steps {
