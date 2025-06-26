@@ -2,6 +2,7 @@ from playwright.sync_api import Page, TimeoutError, Response
 from config.environment import host
 from utils.logger import logger
 
+
 class BasePage:
     def __init__(self, page: Page):
         self.page = page

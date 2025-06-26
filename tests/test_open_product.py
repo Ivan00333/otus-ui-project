@@ -3,6 +3,7 @@ import pytest
 from pages.all_products_page import AllProductsPage
 from pages.product_page import ProductPage
 
+
 @allure.feature("Product Opening")
 @pytest.mark.usefixtures('user_login')
 class TestOpenProduct:

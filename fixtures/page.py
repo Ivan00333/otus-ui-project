@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
+from playwright.sync_api import Page, sync_playwright
 from utils.logger import logger
 import allure
 
@@ -9,13 +9,14 @@ def pytest_addoption(parser):
     parser.addoption('--h', default=True, help='Choose headless: True or False')
     parser.addoption('--slow', default=200, type=int, help='Choose slow_mo for robot action')
 
+
 @pytest.fixture()
 def browser(request) -> Page:
     pw = sync_playwright().start()
 
     browser_name = request.config.getoption("browser")
-    headless   = str(request.config.getoption("h")).lower() in ("true", "1", "yes")
-    slow_mo    = request.config.getoption("slow")
+    headless = str(request.config.getoption("h")).lower() in ("true", "1", "yes")
+    slow_mo = request.config.getoption("slow")
 
     launch_args = {
         "headless": headless,
@@ -40,6 +41,7 @@ def browser(request) -> Page:
     browser.close()
     pw.stop()
 
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
@@ -54,6 +56,3 @@ def pytest_runtest_makereport(item, call):
                 name=f"screenshot-{report.nodeid}",
                 attachment_type=allure.attachment_type.PNG
             )
-
-
-

@@ -1,6 +1,5 @@
 import pytest
 from pages.login_page import LoginPage
-from utils.logger import logger
 
 
 @pytest.fixture()

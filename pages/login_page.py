@@ -1,12 +1,11 @@
 import allure
 from playwright.sync_api import Page
-import allure
-from playwright.sync_api import Page
 from pages.base_page import BasePage
 from assertions.assertions import Assertions
 from locators.auth_locators import AuthLocators
 from config.auth_config import AuthConfig as login_data
 from utils.logger import logger
+
 
 class LoginPage(BasePage):
     def __init__(self, page: Page):
@@ -25,4 +24,3 @@ class LoginPage(BasePage):
         self.page.locator(AuthLocators.PASSWORD_INPUT).fill(login_data.password)
         self.click(AuthLocators.LOGIN_BUTTON)
         self.assertions.check_url("inventory.html", "Wrong URL")
-

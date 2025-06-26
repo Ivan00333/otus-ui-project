@@ -14,4 +14,3 @@ class AuthConfig:
     except Exception as e:
         logger.error(f"AuthConfig: не удалось загрузить параметры авторизации: {e}", exc_info=True)
         raise
-

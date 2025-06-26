@@ -3,6 +3,7 @@ import pytest
 from pages.all_products_page import AllProductsPage
 from locators.all_products_locators import AllProductsLocators
 
+
 @allure.feature("Products Page")
 @pytest.mark.usefixtures('user_login')
 class TestElementsVisible:
@@ -24,8 +25,8 @@ class TestElementsVisible:
     @allure.title("Test that each product card is listed")
     @pytest.mark.parametrize("product_name", AllProductsLocators.PRODUCTS_LIST)
     def test_products_cards(self, browser, product_name):
-        # if product_name == "Sauce Labs Red T-Shirt":
-        #     pytest.xfail(reason="bug: этот продукт пока некорректно отображается")
+        if product_name == "Sauce Labs Red T-Shirt":
+            pytest.xfail(reason="bug: этот продукт пока некорректно отображается")
 
         products_page = AllProductsPage(browser)
         with allure.step(f"Verify presence of product '{product_name}' in list"):
