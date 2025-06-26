@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright/python:v1.52.0-noble'
-            args '-u 1000:1000'
+            args '-u root:root'
         }
     }
 
@@ -104,7 +104,7 @@ pipeline {
 
     post {
         always {
-          sh 'chmod -R a+rwX reports/allure-results || true'
+          sh 'chown -R 1000:1000 reports/allure-results'
           allure([
             reportBuildPolicy: 'ALWAYS',
             results: [[path: 'reports/allure-results']]
