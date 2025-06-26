@@ -1,6 +1,6 @@
 # UI Автотесты для SauceDemo
 
-Репозиторий содержит end-to-end UI автотесты для [SauceDemo](https://www.saucedemo.com/) с использованием Playwright, pytest и Allure, построенные по паттерну Page Object Model (POM).
+Репозиторий содержит UI автотесты для [SauceDemo](https://www.saucedemo.com/) с использованием Playwright, pytest и Allure, построенные по паттерну Page Object Model (POM).
 
 ## Содержание
 
@@ -22,7 +22,7 @@
 * Page Object Model для читаемости и поддержки
 * Конфигурация через файл `.env`
 * Логирование в консоль и в файл с ротацией
-* Интеграция с Allure для богатых HTML-отчётов
+* Интеграция с Allure для HTML-отчётов
 * Конвейер Jenkins с Docker-агентом
 * Скриншоты при падении тестов
 
@@ -38,30 +38,20 @@
 ├── fixtures/                 # дополнительные фикстуры
 │   ├── page.py
 │   ├── user_login.py
-│   ├── __init__.py
-│   └── __pycache__/
 ├── Jenkinsfile               # Declarative Pipeline для Jenkins
 ├── locators/                 # селекторы для POM
 │   ├── auth_locators.py
 │   ├── all_products_locators.py
 │   ├── product_locators.py
 │   ├── cart_locators.py
-│   ├── __init__.py
-│   └── __pycache__/
-├── logs/                     # лог-файлы
-│   └── test_run.log
 ├── pages/                    # Page Object Model
 │   ├── base_page.py
 │   ├── login_page.py
 │   ├── all_products_page.py
 │   ├── product_page.py
-│   ├── cart_page.py
-│   ├── __init__.py
-│   └── __pycache__/
+│   ├── cart_page.py/
 ├── pytest.ini                # конфиг pytest (марки, логирование, Allure)
 ├── README.md
-├── reports/                  # сырые результаты Allure
-│   └── allure-results/
 ├── requirements.txt          # зависимости Python
 ├── tests/                    # тесты pytest
 │   ├── test_add_to_cart.py
@@ -72,13 +62,11 @@
 │   └── __pycache__/
 └── utils/                    # вспомогательные модули
     ├── logger.py             # настройка логгера
-    ├── __init__.py
-    └── __pycache__/
 ```
 
 ## Требования
 
-* Python 3.8+
+* Python 3.12+
 * pip
 * Node.js (для Playwright)
 * Allure Command-Line (для локальной генерации отчётов)
@@ -116,7 +104,7 @@ python3 -m playwright install
 pytest
 
 # С параметрами
-pytest --browser=chrome --h=False --slow=200
+pytest --browser=chrome --h=True --slow=200
 ```
 
 ## Генерация отчётов Allure
@@ -151,8 +139,4 @@ allure open allure-report
 ## Логирование
 
 * Консоль и файл `logs/test_run.log`
-* Конфиг в `src/utils/logger.py` с ротацией файлов
-
-## Контакты
-
-По вопросам и предложениям обращайтесь к QA-команде.
+* Конфиг в `utils/logger.py` с ротацией файлов
