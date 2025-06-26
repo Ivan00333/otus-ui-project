@@ -29,43 +29,56 @@
 ## Структура проекта
 
 ```
-├── .env                   # переменные окружения (URL, ENV, креды)
-├── .gitignore
-├── Jenkinsfile            # описание pipeline Jenkins
-├── requirements.txt       # зависимости Python
-├── pytest.ini             # конфигурация pytest (марки, логирование, Allure)
-├── playwright.config.py   # настройки Playwright
-├── conftest.py            # фикстуры и хуки pytest (Playwright, скриншоты)
-├── src/
-│   ├── config/
-│   │   └── environment.py # загрузка .env
-│   ├── auth/
-│   │   └── auth_config.py # загрузка логина/пароля
-│   ├── utils/
-│   │   ├── logger.py      # настройка логгера
-│   │   └── assertions.py  # кастомные проверки
-│   └── pages/
-│       ├── base_page.py
-│       ├── login_page.py
-│       ├── all_products_page.py
-│       ├── product_page.py
-│       └── cart_page.py
-├── locators/
+├── assertions/               # кастомные ассерт-утилиты
+│   ├── assertions.py
+│   ├── __init__.py
+│   └── __pycache__/
+├── config/                   # загрузка окружения и кредов
+│   ├── auth_config.py
+│   ├── environment.py
+│   ├── __init__.py
+│   └── __pycache__/
+├── conftest.py               # фикстуры и хуки pytest
+├── Dockerfile.jenkins        # (опционально, если не используете официальный образ)
+├── fixtures/                 # дополнительные фикстуры
+│   ├── page.py
+│   ├── user_login.py
+│   ├── __init__.py
+│   └── __pycache__/
+├── Jenkinsfile               # Declarative Pipeline для Jenkins
+├── locators/                 # селекторы для POM
 │   ├── auth_locators.py
 │   ├── all_products_locators.py
 │   ├── product_locators.py
-│   └── cart_locators.py
-├── data/
-│   └── users.json         # тестовые данные (необязательно)
-├── tests/
-│   ├── test_login.py
-│   ├── test_all_products.py
-│   ├── test_product.py
-│   └── test_cart.py
-├── reports/
-│   └── allure-results/    # сырые данные Allure
-└── logs/
-    └── test_run.log       # ротационный лог-файл
+│   ├── cart_locators.py
+│   ├── __init__.py
+│   └── __pycache__/
+├── logs/                     # лог-файлы
+│   └── test_run.log
+├── pages/                    # Page Object Model
+│   ├── base_page.py
+│   ├── login_page.py
+│   ├── all_products_page.py
+│   ├── product_page.py
+│   ├── cart_page.py
+│   ├── __init__.py
+│   └── __pycache__/
+├── pytest.ini                # конфиг pytest (марки, логирование, Allure)
+├── README.md
+├── reports/                  # сырые результаты Allure
+│   └── allure-results/
+├── requirements.txt          # зависимости Python
+├── tests/                    # тесты pytest
+│   ├── test_add_to_cart.py
+│   ├── test_auth.py
+│   ├── test_elements_visible.py
+│   ├── test_open_product.py
+│   ├── __init__.py
+│   └── __pycache__/
+└── utils/                    # вспомогательные модули
+    ├── logger.py             # настройка логгера
+    ├── __init__.py
+    └── __pycache__/
 ```
 
 ## Требования
