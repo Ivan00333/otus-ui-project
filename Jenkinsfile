@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    docker {
+      image 'mcr.microsoft.com/playwright/python:v1.52.0-noble'
+    }
+
 
     parameters {
         credentials(
@@ -9,7 +13,7 @@ pipeline {
         )
         choice(
             name: 'ENV',
-            choices: ['test', 'staging', 'prod'],
+            choices: ['test'],
             description: 'Target environment'
         )
         choice(
@@ -71,7 +75,7 @@ pipeline {
                 . venv/bin/activate
                 pip install --upgrade pip
                 pip install -r requirements.txt
-                python3 -m playwright install --with-deps
+                python3 -m playwright install
                 '''
             }
         }
