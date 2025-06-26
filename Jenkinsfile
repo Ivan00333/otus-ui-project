@@ -104,6 +104,7 @@ pipeline {
 
     post {
         always {
+          sh 'chmod -R a+rwX reports/allure-results || true'
           allure([
             reportBuildPolicy: 'ALWAYS',
             results: [[path: 'reports/allure-results']]
