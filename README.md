@@ -31,15 +31,10 @@
 ```
 ├── assertions/               # кастомные ассерт-утилиты
 │   ├── assertions.py
-│   ├── __init__.py
-│   └── __pycache__/
 ├── config/                   # загрузка окружения и кредов
 │   ├── auth_config.py
 │   ├── environment.py
-│   ├── __init__.py
-│   └── __pycache__/
 ├── conftest.py               # фикстуры и хуки pytest
-├── Dockerfile.jenkins        # (опционально, если не используете официальный образ)
 ├── fixtures/                 # дополнительные фикстуры
 │   ├── page.py
 │   ├── user_login.py
