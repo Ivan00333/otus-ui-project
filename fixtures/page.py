@@ -1,6 +1,7 @@
 import pytest
 from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
 from utils.logger import logger
+import allure
 
 
 def pytest_addoption(parser):
@@ -38,6 +39,21 @@ def browser(request) -> Page:
     context.close()
     browser.close()
     pw.stop()
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == "call" and report.failed:
+        page = item.funcargs.get("page") or item.funcargs.get("browser")
+        if page:
+            png = page.screenshot()
+            allure.attach(
+                png,
+                name=f"screenshot-{report.nodeid}",
+                attachment_type=allure.attachment_type.PNG
+            )
 
 
 
