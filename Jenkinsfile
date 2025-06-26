@@ -2,19 +2,9 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright/python:v1.52.0-noble'
+            args '-u root'
         }
     }
-    stages {
-        stage('Install Java') {
-          steps {
-            sh '''
-              apt-get update
-              apt-get install -y openjdk-11-jre-headless
-            '''
-          }
-        }
-    }
-
 
     parameters {
         credentials(
@@ -53,6 +43,15 @@ pipeline {
     }
 
     stages {
+        stage('Install Java') {
+            steps {
+                sh '''
+                  apt-get update
+                  apt-get install -y openjdk-11-jre-headless
+                '''
+            }
+        }
+
         stage('Checkout') {
             steps {
                 checkout scm
