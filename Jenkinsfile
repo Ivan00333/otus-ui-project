@@ -104,11 +104,11 @@ pipeline {
 
     post {
         always {
-            allure([
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'reports/allure-results']]
-            ])
-            archiveArtifacts artifacts: 'reports/allure-results/**/*', fingerprint: true
+          allure([
+            reportBuildPolicy: 'ALWAYS',
+            results: [[path: 'reports/allure-results']]
+          ])
+          archiveArtifacts artifacts: 'reports/allure-results/**/*', fingerprint: true
         }
     }
 }
