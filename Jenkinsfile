@@ -11,10 +11,10 @@ pipeline {
               apt-get update
               apt-get install -y openjdk-11-jre-headless
             '''
-            }
           }
         }
     }
+
 
     parameters {
         credentials(
