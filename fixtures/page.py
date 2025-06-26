@@ -5,7 +5,7 @@ from utils.logger import logger
 
 def pytest_addoption(parser):
     parser.addoption('--browser', default='chrome', help="Choose browser: chrome or firefox")
-    parser.addoption('--h', default=False, help='Choose headless: True or False')
+    parser.addoption('--h', default=True, help='Choose headless: True or False')
     parser.addoption('--slow', default=200, help='Choose slow_mo for robot action')
 
 @pytest.fixture()
