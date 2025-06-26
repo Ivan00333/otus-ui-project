@@ -12,6 +12,7 @@ pipeline {
               apt-get install -y openjdk-11-jre-headless
             '''
           }
+        }
     }
 
     parameters {
