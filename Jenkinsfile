@@ -1,7 +1,7 @@
 pipeline {
-    agent any
+    agent {
         docker {
-          image 'mcr.microsoft.com/playwright/python:v1.52.0-noble'
+            image 'mcr.microsoft.com/playwright/python:v1-latest'
         }
     }
 
@@ -13,7 +13,7 @@ pipeline {
         )
         choice(
             name: 'ENV',
-            choices: ['test'],
+            choices: ['test', 'staging', 'prod'],
             description: 'Target environment'
         )
         choice(
@@ -35,10 +35,10 @@ pipeline {
 
     environment {
         TEST_URL = 'https://www.saucedemo.com/'
-        ENV       = "${params.ENV}"
-        BROWSER   = "${params.BROWSER}"
-        H         = "${params.HEADLESS}"
-        SLOW      = "${params.SLOW}"
+        ENV      = "${params.ENV}"
+        BROWSER  = "${params.BROWSER}"
+        H        = "${params.HEADLESS}"
+        SLOW     = "${params.SLOW}"
     }
 
     stages {
@@ -56,26 +56,24 @@ pipeline {
                     passwordVariable: 'TEST_AUTH_PASSWORD'
                 )]) {
                     sh '''
-                    cat > .env <<EOF
-                    TEST_URL=${TEST_URL}
-                    ENV=${ENV}
-                    TEST_AUTH_LOGIN=${TEST_AUTH_LOGIN}
-                    TEST_AUTH_PASSWORD=${TEST_AUTH_PASSWORD}
-                    EOF
+                      cat > .env <<EOF
+                      TEST_URL=${TEST_URL}
+                      ENV=${ENV}
+                      TEST_AUTH_LOGIN=${TEST_AUTH_LOGIN}
+                      TEST_AUTH_PASSWORD=${TEST_AUTH_PASSWORD}
+                      EOF
                     '''
                     sh 'echo ".env content:" && cat .env'
                 }
             }
         }
 
-        stage('Setup Python & Playwright') {
+        stage('Install dependencies') {
             steps {
                 sh '''
-                python3 -m venv venv
-                . venv/bin/activate
-                pip install --upgrade pip
-                pip install -r requirements.txt
-                python3 -m playwright install
+                  pip install --upgrade pip
+                  pip install -r requirements.txt
+                  python3 -m playwright install
                 '''
             }
         }
@@ -83,13 +81,12 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh '''
-                . venv/bin/activate
-                pytest \
-                  --browser=${BROWSER} \
-                  --h=${H} \
-                  --slow=${SLOW} \
-                  --alluredir=reports/allure-results \
-                  -q
+                  pytest \
+                    --browser=${BROWSER} \
+                    --h=${H} \
+                    --slow=${SLOW} \
+                    --alluredir=reports/allure-results \
+                    -q
                 '''
             }
         }
